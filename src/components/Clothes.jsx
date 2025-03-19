@@ -28,7 +28,6 @@ const Clothes = () => {
                 alt={cloth.tag}
                 className="w-20 h-20 sm:w-20 sm:h-20 lg:w-24 lg:h-24 object-cover aspect-square rounded-lg"
               />
-
               <h1 className="mx-2 text-sm sm:text-base lg:text-lg font-semibold text-lime-800">
                 {cloth.brand}
               </h1>
