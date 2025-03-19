@@ -112,13 +112,13 @@ const AddClothes = () => {
     document.getElementById("image-upload").value = "";
   };
   return (
-    <div className="flex  space-x-4 p-4">
-      <div className="w-1/2 p-4">
+    <div className="flex flex-col lg:flex-row space-y-4 lg:space-y-0 lg:space-x-4 p-4">
+      <div className="w-full lg:w-1/2">
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
             <label
               htmlFor="image-upload"
-              className="block text-base font-medium text-gray-700"
+              className="block text-sm lg:text-base"
             >
               Select Image
             </label>
@@ -126,19 +126,19 @@ const AddClothes = () => {
               id="image-upload"
               type="file"
               accept="image/*"
-              className=" mt-2 p-1 border border-gray-300 rounded-md text-gray-700"
+              className="w-full mt-2 p-1 border border-gray-300 rounded-md text-gray-700"
               onChange={handleImageUpload}
             />
           </div>
           <div className="mb-4">
-            <label htmlFor="category" className="block text-base">
+            <label htmlFor="category" className="block text-sm lg:text-base">
               Category
             </label>
             <select
               id="category"
               value={category}
               onChange={(e) => setCategory(e.target.value)}
-              className="  mt-2 p-1 border bg-transparent border-gray-300 rounded-md text-gray-800 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              className="w-full  mt-2 px-3 py-1 border bg-transparent border-gray-300 rounded-md text-gray-800 focus:outline-none focus:ring-1 focus:ring-lime-800"
             >
               <option value="" disabled>
                 Select a category
@@ -151,10 +151,7 @@ const AddClothes = () => {
           </div>
 
           <div className="mb-4">
-            <label
-              htmlFor="category"
-              className="block text-base font-medium text-gray-700"
-            >
+            <label htmlFor="category" className="block text-sm lg:text-base">
               Tags
             </label>
 
@@ -162,7 +159,7 @@ const AddClothes = () => {
               id="tag"
               value={tag}
               onChange={(e) => setTag(e.target.value)}
-              className=" mt-2 p-1 border bg-transparent border-gray-300 rounded-md text-gray-800 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              className="w-full mt-2 px-2 py-1 border bg-transparent border-gray-300 rounded-md text-gray-800 focus:outline-none focus:ring-1 focus:ring-lime-800"
             >
               <option value="Shirt">Shirt</option>
               <option value="T-Shirt">T-Shirt</option>
@@ -176,14 +173,14 @@ const AddClothes = () => {
             </select>
           </div>
           <div className="mb-4">
-            <label htmlFor="category" className="block text-base">
+            <label htmlFor="category" className="block text-sm lg:text-base">
               Occasion
             </label>
             <select
               id="Occasion"
               value={occasion}
               onChange={(e) => setOccasion(e.target.value)}
-              className="mt-2 p-1 bg-transparent border border-gray-300 rounded-md text-gray-800 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              className=" w-full mt-2 px-2 py-1 bg-transparent border border-gray-300 rounded-md text-gray-800 focus:outline-none focus:ring-1 focus:ring-lime-800"
             >
               <option value="" disabled>
                 Select an Occasion
@@ -196,7 +193,7 @@ const AddClothes = () => {
           </div>
 
           <div className="mb-4">
-            <label htmlFor="title" className="block text-base">
+            <label htmlFor="title" className=" text-sm lg:text-base">
               Brand
             </label>
             <input
@@ -204,29 +201,31 @@ const AddClothes = () => {
               type="text"
               value={brand}
               onChange={(e) => setBrand(e.target.value)}
-              placeholder="Enter a title"
-              className=" mt-2 p-1 border border-gray-300 rounded bg-transparent"
+              placeholder="Enter the Brand"
+              className="w-full mt-2 py-1 border border-gray-300 rounded bg-transparent focus:outline-none focus:ring-1 focus:ring-lime-800"
             />
           </div>
 
-          <div className="card-actions justify-center">
+          <div className="justify-center">
             <button
               type="submit"
-              className="btn btn-primary rounded-md w-28 py-2 px-6 text-white bg-green-700"
+              className=" w-full lg:w-28 rounded-md px-3 py-1 text-white bg-lime-800"
             >
               Upload
             </button>
           </div>
         </form>
       </div>
-      <div className="w-1/2 text-center">
+      <div className=" w-full lg:w-1/2 flex justify-center item-center">
         {previewImage ? (
           <img
             src={previewImage}
-            className="max-w-md  mx-auto h-full object-contain rounded-md shadow-md "
+            className="mx-auto w-40 h-40 sm:w-52 sm:h-52 rounded-md shadow-md "
           />
         ) : (
-          <h1>Upload to view a preview</h1>
+          <h1 className="text-center text-gray-500">
+            Upload to view a preview
+          </h1>
         )}
       </div>
     </div>

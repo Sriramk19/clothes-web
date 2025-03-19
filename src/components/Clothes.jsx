@@ -9,33 +9,40 @@ const Clothes = () => {
       .get("http://localhost:7777/getClothes")
       .then((response) => {
         setClothes(response.data);
-        console.log(response.data);
       })
       .catch((error) => console.error("Error fetching clothes:", error));
   }, []);
 
   return (
     <div>
-      <h1 className="mx-2 text-lime-800 text-xl font-semibold">Clothes</h1>
-      <div className="flex ">
-        <ul className="flex gap-4 flex-wrap mx-4 my-2">
+      <h1 className="mx-2 my-4 text-lime-800 text-lg font-semibold">Clothes</h1>
+      <div className="flex justify-center ">
+        <ul className="mx-2 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 max-w-full overflow-hidden gap-2">
           {clothes.map((cloth, index) => (
-            <li key={index} className="border-2 border-gray-300 shadow-lg  p-3">
+            <li
+              key={index}
+              className="border-2 border-gray-300 shadow-lg p-1 sm:p-2 lg:p-3 flex flex-col items-center min-h-[180px] hover:scale-105 transition-all duration-300 ease-in-out"
+            >
               <img
                 src={cloth.imageUrl}
                 alt={cloth.tag}
-                className="w-40 h-40 object-cover rounded-lg"
+                className="w-20 h-20 sm:w-20 sm:h-20 lg:w-24 lg:h-24 object-cover aspect-square rounded-lg"
               />
 
-              <h1 className="mx-2 text-lg font-semibold text-lime-800">
+              <h1 className="mx-2 text-sm sm:text-base lg:text-lg font-semibold text-lime-800">
                 {cloth.brand}
               </h1>
-              <h1 className="mx-2 text-xs text-lime-700 mb-2">
+              <h1 className="mx-2 text-xs sm:text-sm text-lime-700 mb-2">
                 {cloth.occasion}
               </h1>
               <p className="mx-2 text-sm text-lime-700">{cloth.clothType}</p>
-              <p className="mx-2 text-xs text-gray-400">
-                Added on {new Date(cloth.createdAt).toLocaleDateString()}
+              <p className="mx-2 text-[9px] sm:text-[10px] lg:text-xs text-gray-400">
+                Added on{" "}
+                {new Date(cloth.createdAt).toLocaleDateString("en-GB", {
+                  day: "2-digit",
+                  month: "short",
+                  year: "numeric",
+                })}
               </p>
             </li>
           ))}

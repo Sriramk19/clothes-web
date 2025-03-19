@@ -79,9 +79,10 @@ const AddCollection = () => {
   };
 
   return (
-    <div>
-      <div className="flex space-x-1">
-        <div className="w-3/6 mx-10">
+    <div className="my-4">
+      {/* {FormSection} */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 p-4">
+        <div>
           <div className="mb-4">
             <label htmlFor="title" className="block text-base">
               Collection Name
@@ -92,7 +93,7 @@ const AddCollection = () => {
               value={collectionName}
               onChange={(e) => setCollectionName(e.target.value)}
               placeholder="Collection Name"
-              className="mt-2 p-1 border border-gray-300 rounded bg-transparent"
+              className="mt-2 px-3 py-1 border border-gray-300 rounded bg-transparent focus:outline-none focus:ring-1 focus:ring-lime-800"
             />
           </div>
           <div className="mb-4">
@@ -105,7 +106,7 @@ const AddCollection = () => {
               value={collectionDescription}
               onChange={(e) => setCollectionDescription(e.target.value)}
               placeholder="Description"
-              className="mt-2 p-1 border border-gray-300 rounded bg-transparent"
+              className="mt-2 px-3 py-1 border border-gray-300 rounded bg-transparent focus:outline-none focus:ring-1 focus:ring-lime-800"
             />
           </div>
 
@@ -117,7 +118,7 @@ const AddCollection = () => {
               id="Occasion"
               value={occasion}
               onChange={(e) => setOccasion(e.target.value)}
-              className="mt-2 p-1 bg-transparent border border-gray-300 rounded-md text-gray-800 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              className="mt-2 px-5 py-1 bg-transparent border border-gray-300 rounded-md text-gray-800 focus:outline-none focus:ring-1 focus:ring-lime-800"
             >
               <option value="" disabled>
                 Select an Occasion
@@ -141,7 +142,7 @@ const AddCollection = () => {
               id="tag"
               value={tag}
               onChange={handleTagChange}
-              className="mt-2 p-1 border bg-transparent border-gray-300 rounded-md text-gray-800 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              className="mt-2 px-6 py-1 border bg-transparent border-gray-300 rounded-md text-gray-800 focus:outline-none focus:ring-1 focus:ring-lime-800"
             >
               <option value="Shirt">Shirt</option>
               <option value="T-Shirt">T-Shirt</option>
@@ -156,17 +157,17 @@ const AddCollection = () => {
           </div>
         </div>
 
-        <div className="w-3/6">
+        <div className="flex flex-col items-center">
           {selectedTop || selectedBottom ? (
             <div className="mt-6 w-72 p-6  border border-gray-400 rounded-lg shadow-lg">
-              <div className="mx-10">
+              <div className="flex flex-col items-center">
                 {/* Top-Wear Preview */}
                 {selectedTop && (
                   <div>
                     <img
                       src={selectedTop.imageUrl}
                       alt={selectedTop.tag}
-                      className="w-40 h-40 object-contain rounded-lg"
+                      className="w-40 h-40 object-contain rounded-lg "
                     />
                   </div>
                 )}
@@ -185,25 +186,27 @@ const AddCollection = () => {
             </div>
           ) : null}
 
-          <button
-            className=" mt-6 mx-14 px-4 py-2 bg-lime-800 border-b rounded-lg  text-white font-medium"
-            onClick={submitCollection}
-          >
-            Add to Collection
-          </button>
+          {selectedTop && selectedBottom ? (
+            <button
+              className=" mt-6 mx-14 text-sm px-4 py-2 bg-lime-800 border-b rounded-lg  text-white font-medium"
+              onClick={submitCollection}
+            >
+              Add to Collection
+            </button>
+          ) : null}
         </div>
       </div>
       {/* Display of clothes */}
-      <div className="mx-10">
-        <h2 className="font-semibold">Clothes</h2>
+      <div className="mt-8 lg:mx-4">
+        <h2 className="text-xl font-semibold">Clothes</h2>
         {filteredClothes.length === 0 ? (
           <h1 className="font-bold">Oops!...No clothes to be filtered</h1>
         ) : (
-          <ul className="flex gap-4 flex-wrap my-2">
+          <ul className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-4 flex-wrap my-2">
             {filteredClothes.map((item, index) => (
               <li
                 key={index}
-                className="border-2 border-gray-300 shadow-lg cursor-pointer p-3"
+                className="border-2 border-gray-300 shadow-lg cursor-pointer p-3  hover:scale-105 transition-all duration-300 ease-in-out"
                 onClick={() => handleImageClick(item)}
               >
                 <img
