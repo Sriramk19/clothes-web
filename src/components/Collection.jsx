@@ -1,17 +1,21 @@
 import axios from "axios";
+import { useUser } from "@clerk/clerk-react";
 import { useEffect, useState } from "react";
 
 const Collection = () => {
   const [collection, setCollection] = useState([]);
+  const { isLoaded, user } = useUser();
   useEffect(() => {
+    if (!isLoaded || !user) return;
+    const clerkUserId = user.id;
     axios
-      .get("http://localhost:7777/getCollection")
+      .get(`http://localhost:7777/getCollection?userId=${clerkUserId}`)
       .then((response) => {
         setCollection(response.data);
         console.log(response.data);
       })
       .catch((error) => console.error("Error fetching clothes:", error));
-  }, []);
+  }, [isLoaded, user]);
   return (
     <div>
       <h1 className="mx-2 my-4 text-lime-800 lg:text-lg font-semibold">

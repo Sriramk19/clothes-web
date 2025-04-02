@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useUser } from "@clerk/clerk-react";
 import axios from "axios";
 //Cloudinary Image imports
 import { Cloudinary } from "@cloudinary/url-gen";
@@ -11,6 +12,7 @@ const AddClothes = () => {
   const [brand, setBrand] = useState("");
   const [selectedImage, setSelectedImage] = useState("");
   const [previewImage, setPreviewImage] = useState("");
+  const { isLoaded, user } = useUser();
 
   const handleImageUpload = async (event) => {
     const files = event.target.files;
@@ -73,7 +75,12 @@ const AddClothes = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    if (!isLoaded || !user) {
+      console.log("User not loaded yet");
+      return;
+    }
     const formData = new FormData();
+    formData.append("userId", user.id);
     formData.append("category", category);
     formData.append("tag", tag);
     formData.append("occasion", occasion);
@@ -87,7 +94,6 @@ const AddClothes = () => {
       for (let [key, value] of formData.entries()) {
         console.log(`${key}:`, value);
       }
-
       const res = await axios.post(BASE_URL + "/clothes", formData, {
         headers: {
           "Content-Type": "multipart/form-data",

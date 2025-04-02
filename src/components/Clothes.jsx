@@ -1,17 +1,24 @@
 import { useState, useEffect } from "react";
+import { useUser } from "@clerk/clerk-react";
 import axios from "axios";
 
 const Clothes = () => {
   const [clothes, setClothes] = useState([]);
+  const { isLoaded, user } = useUser();
 
   useEffect(() => {
+    if (!isLoaded || !user) return;
+    const clerkUserId = user.id;
     axios
-      .get("http://localhost:7777/getClothes")
+      .get(`http://localhost:7777/getClothes?userId=${clerkUserId}`)
       .then((response) => {
-        setClothes(response.data);
+        setClothes(Array.isArray(response.data) ? response.data : []);
       })
       .catch((error) => console.error("Error fetching clothes:", error));
-  }, []);
+    setClothes([]);
+  }, [isLoaded, user]);
+
+  if (!isLoaded || !user) return <p>Loading...</p>;
 
   return (
     <div>

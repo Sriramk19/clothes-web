@@ -22,8 +22,10 @@ function App() {
       className="min-h-screen flex flex-col  bg-cover bg-center overflow-x-hidden"
       style={{ backgroundImage: `url(${bg})` }}
     >
-      <div className="flex">
-        <h1 className="text-blue-500">Header</h1>
+      <div className="flex justify-end mx-2 my-1">
+        <button className="justify- px-3 py-2 text-xs bg-lime-800 border-b rounded-md  text-white font-medium">
+          Logout
+        </button>
       </div>
 
       {/* Clerk Sign In /SignUp Page */}

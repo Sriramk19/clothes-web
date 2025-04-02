@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useUser } from "@clerk/clerk-react";
 import axios from "axios";
 
 const AddCollection = () => {
@@ -10,10 +11,13 @@ const AddCollection = () => {
   const [filteredClothes, setFilteredClothes] = useState([]);
   const [selectedTop, setSelectedTop] = useState(null);
   const [selectedBottom, setSelectedBottom] = useState(null);
-
+  const { isLoaded, user } = useUser();
+  const clerkUserId = user.id;
   useEffect(() => {
+    const clerkUserId = user.id;
+
     axios
-      .get("http://localhost:7777/getClothes")
+      .get(`http://localhost:7777/getClothes?userId=${clerkUserId}`)
       .then((response) => {
         setClothes(response.data);
         console.log(response.data);
@@ -29,7 +33,7 @@ const AddCollection = () => {
     }
 
     const collectionData = {
-      fromUserId: "user_2tgMeUJSpE5wO9OOxYFnHRWdMEb",
+      fromUserId: clerkUserId,
       fromclothId: [selectedTop.id, selectedBottom.id],
       collectionName: collectionName,
       collectionDescription: collectionDescription,
