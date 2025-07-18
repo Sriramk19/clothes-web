@@ -17,47 +17,55 @@ const Collection = () => {
       .catch((error) => console.error("Error fetching clothes:", error));
   }, [isLoaded, user]);
   return (
-    <div>
-      <h1 className="mx-2 my-4 text-lime-800 lg:text-lg font-semibold">
-        My Collection
-      </h1>
-      <div>
-        <ul className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 max-w-full overflow-hidden gap-2 mx-2">
-          {console.log(collection)}
-          {collection.map((collectionItem, index) => (
-            <li
-              key={index}
-              className="flex flex-col items-center border-2 border-gray-300 shadow-lg p-1 sm:p-2 lg:p-3  hover:scale-105 transition-all duration-300 ease-in-out"
-            >
-              {collectionItem.fromclothId.map((cloth, clothIndex) => (
-                <div
-                  key={clothIndex}
-                  className={`p-2 ${clothIndex === 1 ? "-mt-7 lg:-mt-8" : ""} `}
-                >
-                  <img
-                    src={cloth.imageUrl}
-                    alt={cloth.tag}
-                    className="w-16 h-16 sm:w-20 sm:h-20 lg:w-24 lg:h-24 object-cover rounded-lg"
-                  />
-                </div>
-              ))}
+    <div className="p-2 sm:p-6 md:p-8 lg:p-8 xl:p-6 min-h-screen">
+      <div className="max-w-screen-xl mx-auto sm:px-6 lg:px-8">
+        <h1 className="text-xl sm:text-2xl font-semibold mb-4">
+          My Collection
+        </h1>
+        <div>
+          <ul className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2">
+            {collection.map((collectionItem, index) => (
+              <li
+                key={index}
+                className="flex flex-col relative border-2 border-gray-300 shadow-lg p-1 sm:p-2 lg:p-3  hover:scale-105 transition-all duration-300 ease-in-out"
+              >
+                <span className="absolute top-0 right-0 bg-lime-700 text-white text-[10px] font-semibold px-2 py-1 rounded-bl-lg shadow-md z-10">
+                  {collectionItem.collectionOccasion}
+                </span>
 
-              <h1 className="mx-2 lg:text-lg font-semibold text-lime-800">
-                {collectionItem.collectionName}
-              </h1>
-              <h1 className="mx-2 text-xs lg:text-sm text-lime-700 mb-2">
-                {collectionItem.collectionOccasion}
-              </h1>
-              {/* <p className="mx-2 text-sm lg:text-xs text-lime-700">
+                {collectionItem.fromclothId.map((cloth, clothIndex) => (
+                  <div
+                    key={clothIndex}
+                    className={`p-2 ${
+                      clothIndex === 1 ? "-mt-7 lg:-mt-8" : ""
+                    } `}
+                  >
+                    <img
+                      src={cloth.imageUrl}
+                      alt={cloth.tag}
+                      className="w-24 h-24 sm:w-20 sm:h-20 lg:w-40 lg:h-40 object-cover items-center rounded-lg"
+                    />
+                  </div>
+                ))}
+
+                <h1 className="text-sm sm:text-base lg:text-lg text-center text-gray-800 mb-1">
+                  {collectionItem.collectionName}
+                </h1>
+                {/* Commenting thios off because i had created a ribbon effect to show the occassion to reduce space in the card */}
+                {/* <h1 className="mx-2 text-xs lg:text-sm mb-2">
+                    {collectionItem.collectionOccasion}
+                  </h1> */}
+                {/* <p className="mx-2 text-sm lg:text-xs text-lime-700">
                 {collectionItem.collectionDescription}
               </p> */}
-              <p className="mx-2 text-[9px] text-gray-400">
-                Added on{" "}
-                {new Date(collectionItem.createdAt).toLocaleDateString()}
-              </p>
-            </li>
-          ))}
-        </ul>
+                <p className=" text-[9px] text-gray-500 text-center mt-auto">
+                  Added on{" "}
+                  {new Date(collectionItem.createdAt).toLocaleDateString()}
+                </p>
+              </li>
+            ))}
+          </ul>
+        </div>
       </div>
     </div>
   );

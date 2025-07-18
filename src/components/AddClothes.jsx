@@ -4,6 +4,7 @@ import axios from "axios";
 //Cloudinary Image imports
 import { Cloudinary } from "@cloudinary/url-gen";
 const BASE_URL = "http://localhost:7777";
+import { useNavigate } from "react-router-dom";
 
 const AddClothes = () => {
   const [category, setCategory] = useState("");
@@ -13,6 +14,7 @@ const AddClothes = () => {
   const [selectedImage, setSelectedImage] = useState("");
   const [previewImage, setPreviewImage] = useState("");
   const { isLoaded, user } = useUser();
+  const navigate = useNavigate();
 
   const handleImageUpload = async (event) => {
     const files = event.target.files;
@@ -116,10 +118,12 @@ const AddClothes = () => {
     setSelectedImage("");
     setPreviewImage("");
     document.getElementById("image-upload").value = "";
+
+    navigate("/");
   };
   return (
     <div className="flex flex-col lg:flex-row space-y-4 lg:space-y-0 lg:space-x-4 p-4">
-      <div className="w-full lg:w-1/2">
+      <div className=" lg:w-1/2 mx-16">
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
             <label
@@ -132,7 +136,7 @@ const AddClothes = () => {
               id="image-upload"
               type="file"
               accept="image/*"
-              className="w-full mt-2 p-1 border border-gray-300 rounded-md text-gray-700"
+              className="w-full sm:w-72 md:w-80 lg:w-96 px-3 py-2 text-sm border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-1 focus:ring-lime-800 transition"
               onChange={handleImageUpload}
             />
           </div>
@@ -144,7 +148,7 @@ const AddClothes = () => {
               id="category"
               value={category}
               onChange={(e) => setCategory(e.target.value)}
-              className="w-full  mt-2 px-3 py-1 border bg-transparent border-gray-300 rounded-md text-gray-800 focus:outline-none focus:ring-1 focus:ring-lime-800"
+              className="w-full sm:w-68 md:w-64 mt-2 px-3 py-1 border bg-transparent border-gray-300 rounded-md text-gray-800 focus:outline-none focus:ring-1 focus:ring-lime-800 transition"
             >
               <option value="" disabled>
                 Select a category
@@ -160,12 +164,15 @@ const AddClothes = () => {
             <label htmlFor="category" className="block text-sm lg:text-base">
               Tags
             </label>
+            {console.log(document.documentElement.scrollHeight)}
+            {console.log(document.body.scrollHeight)}
+            {console.log(window.innerHeight)}
 
             <select
               id="tag"
               value={tag}
               onChange={(e) => setTag(e.target.value)}
-              className="w-full mt-2 px-2 py-1 border bg-transparent border-gray-300 rounded-md text-gray-800 focus:outline-none focus:ring-1 focus:ring-lime-800"
+              className="w-full  sm:w-40 md:w-64  mt-2 px-2 py-1 border bg-transparent border-gray-300 rounded-md text-gray-800 focus:outline-none focus:ring-1 focus:ring-lime-800 transition"
             >
               <option value="Shirt">Shirt</option>
               <option value="T-Shirt">T-Shirt</option>
@@ -186,7 +193,7 @@ const AddClothes = () => {
               id="Occasion"
               value={occasion}
               onChange={(e) => setOccasion(e.target.value)}
-              className=" w-full mt-2 px-2 py-1 bg-transparent border border-gray-300 rounded-md text-gray-800 focus:outline-none focus:ring-1 focus:ring-lime-800"
+              className=" w-full sm:w-40 md:w-64  mt-2 px-2 py-1 bg-transparent border border-gray-300 rounded-md text-gray-800 focus:outline-none focus:ring-1 focus:ring-lime-800"
             >
               <option value="" disabled>
                 Select an Occasion
@@ -199,7 +206,7 @@ const AddClothes = () => {
           </div>
 
           <div className="mb-4">
-            <label htmlFor="title" className=" text-sm lg:text-base">
+            <label htmlFor="title" className="block text-sm lg:text-base">
               Brand
             </label>
             <input
@@ -208,14 +215,14 @@ const AddClothes = () => {
               value={brand}
               onChange={(e) => setBrand(e.target.value)}
               placeholder="Enter the Brand"
-              className="w-full mt-2 py-1 border border-gray-300 rounded bg-transparent focus:outline-none focus:ring-1 focus:ring-lime-800"
+              className="w-full sm:w-40 md:w-64 mt-2 px-2 py-1 border border-gray-300 rounded bg-transparent focus:outline-none focus:ring-1 focus:ring-lime-800"
             />
           </div>
 
           <div className="justify-center">
             <button
               type="submit"
-              className=" w-full lg:w-28 rounded-md px-3 py-1 text-white bg-lime-800"
+              className="w-full sm:w-28 md:w-32 lg:w-40 rounded-md px-2 sm:px-4 py-1 sm:py-2 text-sm sm:text-base text-white font-medium bg-lime-700 hover:bg-lime-800 transition shadow-sm"
             >
               Upload
             </button>
@@ -226,7 +233,7 @@ const AddClothes = () => {
         {previewImage ? (
           <img
             src={previewImage}
-            className="mx-auto w-40 h-40 sm:w-52 sm:h-52 rounded-md shadow-md "
+            className="mx-auto w-48 h-48 sm:w-56 sm:h-56 rounded-lg shadow-md object-cover"
           />
         ) : (
           <h1 className="text-center text-gray-500">
