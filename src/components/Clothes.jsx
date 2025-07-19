@@ -33,7 +33,7 @@ const Clothes = () => {
           <div>
             <button
               onClick={() => navigate("/add-clothes")}
-              className="px-3 py-2 text-xs bg-lime-800 border-b rounded-md text-white font-medium"
+              className="px-4 py-1 lg:py-2 text-sm border border-gray-400 text-gray-700 rounded-md hover:bg-lime-700 hover:text-black transition"
             >
               <span className="mr-1 text-sm">+</span>
               <span>Add Clothes</span>
@@ -75,14 +75,12 @@ const Clothes = () => {
           </ul>
           {visibleCount < clothes.length && (
             <div className="flex justify-center mt-6">
-              <motion.button
+              <button
                 onClick={() => setVisibleCount((prev) => prev + 5)}
-                whileHover={{ scale: [1, 1.05, 1], backgroundColor: "#365314" }}
-                transition={{ duration: 1, repeat: Infinity }}
-                className="px-4 py-2 bg-lime-700 text-white rounded-md"
+                className="px-4 py-2 text-sm border border-gray-400 text-gray-700 rounded-md hover:bg-lime-700 "
               >
                 Load More
-              </motion.button>
+              </button>
             </div>
           )}
         </div>

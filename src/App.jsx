@@ -35,12 +35,12 @@ function App() {
 
   return (
     <div
-      className="min-h-screen flex flex-col  bg-cover bg-center overflow-x-hidden"
+      className="min-h-screen flex flex-col bg-cover bg-center overflow-x-hidden"
       style={{ backgroundImage: `url(${bg})` }}
     >
       {/* Logo  */}
-      <div className="max-w-screen-xl w-full mx-auto flex flex-col flex-grow">
-        <div className="flex flex-col sm:flex-row  justify-between items-center py-4 gap-2">
+      <div className="max-w-screen-xl w-full mx-auto sm:px-6 flex flex-col flex-grow">
+        <div className="flex flex-col sm:flex-row  justify-between items-center py-4 gap-4">
           <div className="w-full sm:w-auto mt-4 text-center sm:text-left lg:mb-2 ">
             <h1
               onClick={() => navigate("/")}
@@ -49,8 +49,8 @@ function App() {
               Wardrobe<span className="text-lime-800">Online.</span>
             </h1>
           </div>
-          <div className="w-full sm:w-auto flex justify-center sm:justify-end items-center gap-3">
-            <p className=" text-lime-800 font-semibold sm:text-base my-1">
+          <div className="w-full sm:w-auto flex justify-center sm:justify-end items-center gap-3 relative">
+            <p className=" text-lime-800 px-2 font-semibold sm:text-base my-1">
               Hello, {clerkUserName}
             </p>
 
@@ -62,7 +62,8 @@ function App() {
             />
             {showLogout && (
               <button
-                className="absolute top-10 right-0 z-10 px-4 py-2 text-sm bg-white border border-gray-300 text-lime-800 rounded-md shadow-md whitespace-nowrap"
+                className="absolute top-2 right-1 sm:top-10 sm:right-0 z-10 px-4 py-2 text-sm text-lime-800 rounded-md shadow-lg transition-transform duration-200 ease-in-out hover:scale-105
+                "
                 onClick={handleLogout}
               >
                 Logout

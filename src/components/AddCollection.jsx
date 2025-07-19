@@ -12,6 +12,7 @@ const AddCollection = () => {
   const [filteredClothes, setFilteredClothes] = useState([]);
   const [selectedTop, setSelectedTop] = useState(null);
   const [selectedBottom, setSelectedBottom] = useState(null);
+  const [visibleCount, setVisibleCount] = useState(10);
   const { isLoaded, user } = useUser();
   const navigate = useNavigate();
   const clerkUserId = user.id;
@@ -101,7 +102,7 @@ const AddCollection = () => {
                 value={collectionName}
                 onChange={(e) => setCollectionName(e.target.value)}
                 placeholder="Collection Name"
-                className="mt-2 px-3 py-1 border border-gray-300 rounded bg-transparent focus:outline-none focus:ring-1 focus:ring-lime-800"
+                className="mt-2 px-3 w-full py-1 border border-gray-300 rounded bg-transparent focus:outline-none focus:ring-1 focus:ring-lime-800"
               />
             </div>
             <div className="mb-4">
@@ -114,7 +115,7 @@ const AddCollection = () => {
                 value={collectionDescription}
                 onChange={(e) => setCollectionDescription(e.target.value)}
                 placeholder="Description"
-                className="mt-2 px-3 py-1 border border-gray-300 rounded bg-transparent focus:outline-none focus:ring-1 focus:ring-lime-800"
+                className="mt-2 px-3 w-full py-1 border border-gray-300 rounded bg-transparent focus:outline-none focus:ring-1 focus:ring-lime-800"
               />
             </div>
 
@@ -126,7 +127,7 @@ const AddCollection = () => {
                 id="Occasion"
                 value={occasion}
                 onChange={(e) => setOccasion(e.target.value)}
-                className="mt-2 px-5 py-1 bg-transparent border border-gray-300 rounded-md text-gray-800 focus:outline-none focus:ring-1 focus:ring-lime-800"
+                className="mt-2 w-full py-1 bg-transparent border border-gray-300 rounded-md text-gray-800 focus:outline-none focus:ring-1 focus:ring-lime-800"
               >
                 <option value="" disabled>
                   Select an Occasion
@@ -150,7 +151,7 @@ const AddCollection = () => {
                 id="tag"
                 value={tag}
                 onChange={handleTagChange}
-                className="mt-2 px-6 py-1 border bg-transparent border-gray-300 rounded-md text-gray-800 focus:outline-none focus:ring-1 focus:ring-lime-800"
+                className="mt-2 px-6 py-1 w-full border bg-transparent border-gray-300 rounded-md text-gray-800 focus:outline-none focus:ring-1 focus:ring-lime-800"
               >
                 <option value="Shirt">Shirt</option>
                 <option value="T-Shirt">T-Shirt</option>
@@ -211,7 +212,7 @@ const AddCollection = () => {
             <h1 className="font-bold">Oops!...No clothes to be filtered</h1>
           ) : (
             <ul className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-2 flex-wrap my-2">
-              {filteredClothes.map((item, index) => (
+              {filteredClothes.slice(0, visibleCount).map((item, index) => (
                 <li
                   key={index}
                   className="border-2 border-gray-300 shadow-lg cursor-pointer p-3  hover:scale-105 transition-all duration-300 ease-in-out"
@@ -228,6 +229,16 @@ const AddCollection = () => {
                 </li>
               ))}
             </ul>
+          )}
+          {visibleCount < clothes.length && (
+            <div className="flex justify-center mt-6">
+              <button
+                onClick={() => setVisibleCount((prev) => prev + 5)}
+                className="px-4 py-2 text-sm border border-gray-400 text-gray-700 rounded-md hover:bg-lime-700 "
+              >
+                Load More
+              </button>
+            </div>
           )}
         </div>
       </div>

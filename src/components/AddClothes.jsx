@@ -136,10 +136,11 @@ const AddClothes = () => {
               id="image-upload"
               type="file"
               accept="image/*"
-              className="w-full sm:w-72 md:w-80 lg:w-96 px-3 py-2 text-sm border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-1 focus:ring-lime-800 transition"
+              className="w-full px-3 py-2 text-sm border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-1 focus:ring-lime-800 transition"
               onChange={handleImageUpload}
             />
           </div>
+
           <div className="mb-4">
             <label htmlFor="category" className="block text-sm lg:text-base">
               Category
@@ -148,7 +149,7 @@ const AddClothes = () => {
               id="category"
               value={category}
               onChange={(e) => setCategory(e.target.value)}
-              className="w-full sm:w-68 md:w-64 mt-2 px-3 py-1 border bg-transparent border-gray-300 rounded-md text-gray-800 focus:outline-none focus:ring-1 focus:ring-lime-800 transition"
+              className="w-full mt-2 px-3 py-1 border bg-transparent border-gray-300 rounded-md text-gray-800 focus:outline-none focus:ring-1 focus:ring-lime-800 transition"
             >
               <option value="" disabled>
                 Select a category
@@ -172,7 +173,7 @@ const AddClothes = () => {
               id="tag"
               value={tag}
               onChange={(e) => setTag(e.target.value)}
-              className="w-full  sm:w-40 md:w-64  mt-2 px-2 py-1 border bg-transparent border-gray-300 rounded-md text-gray-800 focus:outline-none focus:ring-1 focus:ring-lime-800 transition"
+              className="w-full   mt-2 px-2 py-1 border bg-transparent border-gray-300 rounded-md text-gray-800 focus:outline-none focus:ring-1 focus:ring-lime-800 transition"
             >
               <option value="Shirt">Shirt</option>
               <option value="T-Shirt">T-Shirt</option>
@@ -193,7 +194,7 @@ const AddClothes = () => {
               id="Occasion"
               value={occasion}
               onChange={(e) => setOccasion(e.target.value)}
-              className=" w-full sm:w-40 md:w-64  mt-2 px-2 py-1 bg-transparent border border-gray-300 rounded-md text-gray-800 focus:outline-none focus:ring-1 focus:ring-lime-800"
+              className=" w-full  mt-2 px-2 py-1 bg-transparent border border-gray-300 rounded-md text-gray-800 focus:outline-none focus:ring-1 focus:ring-lime-800"
             >
               <option value="" disabled>
                 Select an Occasion
@@ -215,7 +216,7 @@ const AddClothes = () => {
               value={brand}
               onChange={(e) => setBrand(e.target.value)}
               placeholder="Enter the Brand"
-              className="w-full sm:w-40 md:w-64 mt-2 px-2 py-1 border border-gray-300 rounded bg-transparent focus:outline-none focus:ring-1 focus:ring-lime-800"
+              className="w-full mt-2 px-2 py-1 border border-gray-300 rounded bg-transparent focus:outline-none focus:ring-1 focus:ring-lime-800"
             />
           </div>
 
@@ -225,6 +226,14 @@ const AddClothes = () => {
               className="w-full sm:w-28 md:w-32 lg:w-40 rounded-md px-2 sm:px-4 py-1 sm:py-2 text-sm sm:text-base text-white font-medium bg-lime-700 hover:bg-lime-800 transition shadow-sm"
             >
               Upload
+            </button>
+
+            <button
+              type="submit"
+              className=" md:mx-2 lg:mx-2 w-full sm:w-28 mt-4 md:w-32 lg:w-40 rounded-md px-2 sm:px-4 py-1 sm:py-2 text-sm sm:text-base border border-gray-400 text-gray-700"
+              onClick={() => navigate("/")}
+            >
+              Add Later
             </button>
           </div>
         </form>
