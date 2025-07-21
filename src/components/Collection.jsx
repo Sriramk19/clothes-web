@@ -8,6 +8,7 @@ const Collection = () => {
   useEffect(() => {
     if (!isLoaded || !user) return;
     const clerkUserId = user.id;
+    // env
     axios
       .get(`http://localhost:7777/getCollection?userId=${clerkUserId}`)
       .then((response) => {

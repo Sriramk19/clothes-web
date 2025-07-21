@@ -16,6 +16,7 @@ import { useNavigate } from "react-router-dom";
 import NotFound from "./components/NotFound";
 
 const cld = new Cloudinary({ cloud: { cloudName: "dpbrphx2g" } });
+// env
 const BASE_URL = "http://localhost:7777";
 
 function App() {

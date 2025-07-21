@@ -12,6 +12,7 @@ const Clothes = () => {
   useEffect(() => {
     if (!isLoaded || !user) return;
     const clerkUserId = user.id;
+    // env
     axios
       .get(`http://localhost:7777/getClothes?userId=${clerkUserId}`)
       .then((response) => {

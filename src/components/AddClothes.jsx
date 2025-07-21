@@ -3,6 +3,7 @@ import { useUser } from "@clerk/clerk-react";
 import axios from "axios";
 //Cloudinary Image imports
 import { Cloudinary } from "@cloudinary/url-gen";
+//
 const BASE_URL = "http://localhost:7777";
 import { useNavigate } from "react-router-dom";
 
@@ -14,6 +15,11 @@ const AddClothes = () => {
   const [selectedImage, setSelectedImage] = useState("");
   const [previewImage, setPreviewImage] = useState("");
   const { isLoaded, user } = useUser();
+  const apiKey = import.meta.env.VITE_REMOVE_BG_API_KEY;
+  const CLOUDINARY_URLenv = import.meta.env.VITE_CLOUDINARY_URL;
+  const CLOUDINARY_UPLOAD_PRESETenv = import.meta.env
+    .VITE_CLOUDINARY_UPLOAD_PRESET;
+
   const navigate = useNavigate();
 
   const handleImageUpload = async (event) => {
@@ -37,7 +43,7 @@ const AddClothes = () => {
         formData,
         {
           headers: {
-            "X-Api-Key": "2HTnSNjmnfZJcpc1kxsrvk7k", // Get this from Remove.bg
+            "X-Api-Key": apiKey, // Get this from Remove.bg
             "Content-Type": "multipart/form-data",
           },
           responseType: "blob", // Get the image as a blob
@@ -54,9 +60,8 @@ const AddClothes = () => {
 
       // Check if files is defined and contains at least one file
 
-      const CLOUDINARY_URL =
-        "https://api.cloudinary.com/v1_1/dpbrphx2g/image/upload";
-      const CLOUDINARY_UPLOAD_PRESET = "cloth_image";
+      const CLOUDINARY_URL = CLOUDINARY_URLenv;
+      const CLOUDINARY_UPLOAD_PRESET = CLOUDINARY_UPLOAD_PRESETenv;
 
       formData.append("file", bgRemovedFile);
       formData.append("upload_preset", CLOUDINARY_UPLOAD_PRESET);

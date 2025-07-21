@@ -18,7 +18,7 @@ const AddCollection = () => {
   const clerkUserId = user.id;
   useEffect(() => {
     const clerkUserId = user.id;
-
+    // Env file
     axios
       .get(`http://localhost:7777/getClothes?userId=${clerkUserId}`)
       .then((response) => {
@@ -44,7 +44,7 @@ const AddCollection = () => {
       favourite: false,
     };
     console.log(collectionData);
-
+    // env File
     axios
       .post("http://localhost:7777/clothCollection", collectionData)
       .then((response) => {
