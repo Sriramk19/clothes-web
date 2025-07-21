@@ -13,6 +13,7 @@ import SignInPage from "./components/SignIn";
 import { useClerk, useUser } from "@clerk/clerk-react";
 import list from "./assets/list.png";
 import { useNavigate } from "react-router-dom";
+import NotFound from "./components/NotFound";
 
 const cld = new Cloudinary({ cloud: { cloudName: "dpbrphx2g" } });
 const BASE_URL = "http://localhost:7777";
@@ -146,6 +147,7 @@ function App() {
             }
           />
           <Route path="/add-clothes" element={<AddClothes />} />
+          <Route path="*" element={<NotFound />} />
         </Routes>
       </main>
       <footer className="bg-gray-900  text-white text-center py-3">
