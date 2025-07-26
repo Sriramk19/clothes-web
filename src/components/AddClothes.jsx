@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { useUser } from "@clerk/clerk-react";
 import axios from "axios";
+import { useAuth } from "@clerk/clerk-react";
+
 //Cloudinary Image imports
 import { Cloudinary } from "@cloudinary/url-gen";
 //
@@ -15,6 +17,7 @@ const AddClothes = () => {
   const [selectedImage, setSelectedImage] = useState("");
   const [previewImage, setPreviewImage] = useState("");
   const { isLoaded, user } = useUser();
+  const { getToken } = useAuth();
   const apiKey = import.meta.env.VITE_REMOVE_BG_API_KEY;
   const CLOUDINARY_URLenv = import.meta.env.VITE_CLOUDINARY_URL;
   const CLOUDINARY_UPLOAD_PRESETenv = import.meta.env
@@ -72,7 +75,6 @@ const AddClothes = () => {
         const imageUrl = response.data.secure_url;
         console.log("imageURL", imageUrl);
         setSelectedImage(imageUrl); // Store the image URL in state
-        //console.log("Uploaded Image URL:", imageUrl);
       });
     } catch (error) {
       console.error("Cloudinary Error", error);
@@ -87,7 +89,7 @@ const AddClothes = () => {
       return;
     }
     const formData = new FormData();
-    formData.append("userId", user.id);
+    //formData.append("userId", user.id);
     formData.append("category", category);
     formData.append("tag", tag);
     formData.append("occasion", occasion);
@@ -97,6 +99,8 @@ const AddClothes = () => {
       formData.append("image", selectedImage);
     }
     try {
+      const token = await getToken();
+      console.log("Token:", token);
       console.log("Form Data Contents:");
       for (let [key, value] of formData.entries()) {
         console.log(`${key}:`, value);
@@ -104,9 +108,9 @@ const AddClothes = () => {
       const res = await axios.post(BASE_URL + "/clothes", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
+          Authorization: `Bearer ${token}`,
         },
       });
-      console.log("Upload Sucessfull:");
     } catch (err) {
       if (err.response) {
         // Log the error response

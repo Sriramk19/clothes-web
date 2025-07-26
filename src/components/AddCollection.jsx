@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useUser } from "@clerk/clerk-react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "@clerk/clerk-react";
 
 const AddCollection = () => {
   const [collectionName, setCollectionName] = useState("");
@@ -16,20 +17,29 @@ const AddCollection = () => {
   const { isLoaded, user } = useUser();
   const navigate = useNavigate();
   const clerkUserId = user.id;
+  const { getToken } = useAuth();
+
   useEffect(() => {
-    const clerkUserId = user.id;
-    // Env file
-    axios
-      .get(`http://localhost:7777/getClothes?userId=${clerkUserId}`)
-      .then((response) => {
+    const fetchClothes = async () => {
+      try {
+        const token = await getToken();
+        const response = await axios.get("http://localhost:7777/getClothes", {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
         setClothes(response.data);
-        console.log(response.data);
         setFilteredClothes(response.data);
-      })
-      .catch((error) => console.error("Error fetching clothes:", error));
+      } catch (error) {
+        console.error("Error fetching clothes:", error);
+      }
+    };
+    fetchClothes();
   }, []);
 
-  const submitCollection = () => {
+  const submitCollection = async () => {
+    const token = await getToken();
+    console.log("Token", token);
     if (!selectedTop || !selectedBottom) {
       alert("Please select a top and bottom to finish the collection");
       return;
@@ -43,19 +53,22 @@ const AddCollection = () => {
       collectionOccasion: occasion,
       favourite: false,
     };
-    console.log(collectionData);
-    // env File
-    axios
-      .post("http://localhost:7777/clothCollection", collectionData)
-      .then((response) => {
-        console.log("Collection Added", response.data);
-        alert("Collection successfully added!");
-        navigate("/");
-      })
-      .catch((error) => {
-        console.error("Error adding collection:", error);
-        alert("Failed to add collection.");
-      });
+    try {
+      await axios.post(
+        "http://localhost:7777/clothCollection",
+        collectionData,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      alert("Collection created successfully!");
+      navigate("/");
+    } catch (err) {
+      console.error("Error adding collection:", err);
+      alert("Failed to add collection.");
+    }
   };
 
   const handleImageClick = (item) => {

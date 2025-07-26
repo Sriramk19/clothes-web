@@ -1,21 +1,33 @@
 import axios from "axios";
 import { useUser } from "@clerk/clerk-react";
 import { useEffect, useState } from "react";
+import { useAuth } from "@clerk/clerk-react";
 
 const Collection = () => {
   const [collection, setCollection] = useState([]);
   const { isLoaded, user } = useUser();
+  const { getToken } = useAuth();
   useEffect(() => {
-    if (!isLoaded || !user) return;
-    const clerkUserId = user.id;
-    // env
-    axios
-      .get(`http://localhost:7777/getCollection?userId=${clerkUserId}`)
-      .then((response) => {
+    const fetchCollections = async () => {
+      try {
+        if (!isLoaded || !user) return;
+
+        const token = await getToken();
+        const response = await axios.get(
+          "http://localhost:7777/getCollection",
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
         setCollection(response.data);
-        console.log(response.data);
-      })
-      .catch((error) => console.error("Error fetching clothes:", error));
+      } catch (error) {
+        console.error("Error fetching clothes:", error);
+      }
+    };
+
+    fetchCollections();
   }, [isLoaded, user]);
   return (
     <div className="p-2 sm:p-6 md:p-8 lg:p-8 xl:p-6 min-h-screen">

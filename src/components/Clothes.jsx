@@ -2,24 +2,33 @@ import { useState, useEffect } from "react";
 import { useUser } from "@clerk/clerk-react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "@clerk/clerk-react";
 import { motion } from "framer-motion";
+
 const Clothes = () => {
   const [clothes, setClothes] = useState([]);
   const { isLoaded, user } = useUser();
   const [visibleCount, setVisibleCount] = useState(5);
-
+  const { getToken } = useAuth();
   const navigate = useNavigate();
   useEffect(() => {
-    if (!isLoaded || !user) return;
-    const clerkUserId = user.id;
-    // env
-    axios
-      .get(`http://localhost:7777/getClothes?userId=${clerkUserId}`)
-      .then((response) => {
+    const fetchClothes = async () => {
+      try {
+        const token = await getToken();
+        const response = await axios.get("http://localhost:7777/getClothes", {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
         setClothes(Array.isArray(response.data) ? response.data : []);
-      })
-      .catch((error) => console.error("Error fetching clothes:", error));
-    setClothes([]);
+      } catch (error) {
+        console.error("Error fetching clothes:", error);
+        setClothes([]);
+      }
+    };
+    if (isLoaded && user) {
+      fetchClothes();
+    }
   }, [isLoaded, user]);
 
   if (!isLoaded || !user) return <p>Loading...</p>;
@@ -41,7 +50,7 @@ const Clothes = () => {
             </button>
           </div>
         </div>
-        <div className="">
+        <div>
           <ul className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2">
             {clothes.slice(0, visibleCount).map((cloth, index) => (
               <li
