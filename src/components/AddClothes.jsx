@@ -105,12 +105,16 @@ const AddClothes = () => {
       for (let [key, value] of formData.entries()) {
         console.log(`${key}:`, value);
       }
-      const res = await axios.post(BASE_URL + "/clothes", formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      const res = await axios.post(
+        `${import.meta.env.VITE_API_URL}/clothes`,
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
     } catch (err) {
       if (err.response) {
         // Log the error response

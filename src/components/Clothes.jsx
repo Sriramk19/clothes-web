@@ -15,11 +15,14 @@ const Clothes = () => {
     const fetchClothes = async () => {
       try {
         const token = await getToken();
-        const response = await axios.get("http://localhost:7777/getClothes", {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
+        const response = await axios.get(
+          `${import.meta.env.VITE_API_URL}/getClothes`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
         setClothes(Array.isArray(response.data) ? response.data : []);
       } catch (error) {
         console.error("Error fetching clothes:", error);

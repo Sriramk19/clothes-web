@@ -23,11 +23,15 @@ const AddCollection = () => {
     const fetchClothes = async () => {
       try {
         const token = await getToken();
-        const response = await axios.get("http://localhost:7777/getClothes", {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
+        const response = await axios.get(
+          `${import.meta.env.VITE_API_URL}/getClothes`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        console.log("API URL:", import.meta.env.VITE_API_URL);
         setClothes(response.data);
         setFilteredClothes(response.data);
       } catch (error) {
@@ -55,7 +59,7 @@ const AddCollection = () => {
     };
     try {
       await axios.post(
-        "http://localhost:7777/clothCollection",
+        `${import.meta.env.VITE_API_URL}/clothCollection`,
         collectionData,
         {
           headers: {

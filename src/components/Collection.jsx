@@ -13,8 +13,9 @@ const Collection = () => {
         if (!isLoaded || !user) return;
 
         const token = await getToken();
+
         const response = await axios.get(
-          "http://localhost:7777/getCollection",
+          `${import.meta.env.VITE_API_URL}/getCollection`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
