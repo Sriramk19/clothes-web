@@ -8,7 +8,7 @@ import AddClothes from "./components/AddClothes";
 import AddCollection from "./components/AddCollection";
 import Collection from "./components/Collection";
 import { SignedIn, SignedOut, RedirectToSignIn } from "@clerk/clerk-react";
-import SignUpPage from "./components/signUp";
+import SignUpPage from "./components/SignUp";
 import SignInPage from "./components/SignIn";
 import { useClerk, useUser } from "@clerk/clerk-react";
 import list from "./assets/list.png";
