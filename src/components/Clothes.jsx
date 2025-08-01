@@ -38,7 +38,7 @@ const Clothes = () => {
 
   return (
     <div className="p-2 sm:p-6 md:p-6 lg:p-6 xl:p-6 min-h-screen">
-      <div className="max-w-screen-xl mx-auto">
+      <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between w-full">
           <div>
             <h1 className="text-xl sm:text-2xl font-semibold mb-4">Clothes</h1>
