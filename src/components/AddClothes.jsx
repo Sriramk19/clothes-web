@@ -137,13 +137,14 @@ const AddClothes = () => {
   return (
     <div className="flex flex-col lg:flex-row space-y-4 lg:space-y-0 lg:space-x-4 p-4">
       <div className=" lg:w-1/2 mx-16">
+        <h1 className="text-xl sm:text-2xl mb-8 font-semibold">Add Clothes</h1>
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
             <label
               htmlFor="image-upload"
               className="block text-sm lg:text-base"
             >
-              Select Image
+              Select Image<span className="text-red-600">*</span>
             </label>
             <input
               id="image-upload"
@@ -156,7 +157,7 @@ const AddClothes = () => {
 
           <div className="mb-4">
             <label htmlFor="category" className="block text-sm lg:text-base">
-              Category
+              Category<span className="text-red-600">*</span>
             </label>
             <select
               id="category"
@@ -176,7 +177,7 @@ const AddClothes = () => {
 
           <div className="mb-4">
             <label htmlFor="category" className="block text-sm lg:text-base">
-              Tags
+              Tags<span className="text-red-600">*</span>
             </label>
             {console.log(document.documentElement.scrollHeight)}
             {console.log(document.body.scrollHeight)}

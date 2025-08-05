@@ -3,7 +3,7 @@ import { useUser } from "@clerk/clerk-react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "@clerk/clerk-react";
-
+import { toast } from "react-hot-toast";
 const AddCollection = () => {
   const [collectionName, setCollectionName] = useState("");
   const [collectionDescription, setCollectionDescription] = useState("");
@@ -67,11 +67,17 @@ const AddCollection = () => {
           },
         }
       );
-      alert("Collection created successfully!");
-      navigate("/");
+      toast.success("Collection created successfully!");
+      setTimeout(() => {
+        navigate("/");
+        // Reset the activeTab state after navigation
+        window.dispatchEvent(
+          new CustomEvent("resetTab", { detail: "viewCollection" })
+        );
+      }, 1500);
     } catch (err) {
       console.error("Error adding collection:", err);
-      alert("Failed to add collection.");
+      alert("Enter the required details");
     }
   };
 
@@ -105,13 +111,18 @@ const AddCollection = () => {
 
   return (
     <div className="flex-grow mt-4 flex flex-col">
+      <div>
+        <h1 className="text-xl sm:text-2xl mx-16 font-semibold">
+          Add Collection
+        </h1>
+      </div>
       <div className="mx-12">
         {/* {FormSection} */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 p-4">
           <div>
             <div className="mb-4">
               <label htmlFor="title" className="block text-base">
-                Collection Name
+                Collection Name<span className="text-red-600">*</span>
               </label>
               <input
                 id="collectionName"
@@ -119,7 +130,7 @@ const AddCollection = () => {
                 value={collectionName}
                 onChange={(e) => setCollectionName(e.target.value)}
                 placeholder="Collection Name"
-                className="mt-2 px-3 w-full py-1 border border-gray-300 rounded bg-transparent focus:outline-none focus:ring-1 focus:ring-lime-800"
+                className="mt-2 px-3 w-full py-1 border border-gray-400 text-black rounded bg-transparent focus:outline-none focus:ring-1 focus:ring-lime-800"
               />
             </div>
             <div className="mb-4">
@@ -132,7 +143,7 @@ const AddCollection = () => {
                 value={collectionDescription}
                 onChange={(e) => setCollectionDescription(e.target.value)}
                 placeholder="Description"
-                className="mt-2 px-3 w-full py-1 border border-gray-300 rounded bg-transparent focus:outline-none focus:ring-1 focus:ring-lime-800"
+                className="mt-2 px-3 w-full py-1 border border-gray-400 text-black rounded bg-transparent focus:outline-none focus:ring-1 focus:ring-lime-800"
               />
             </div>
 
@@ -144,7 +155,7 @@ const AddCollection = () => {
                 id="Occasion"
                 value={occasion}
                 onChange={(e) => setOccasion(e.target.value)}
-                className="mt-2 w-full py-1 bg-transparent border border-gray-300 rounded-md text-gray-800 focus:outline-none focus:ring-1 focus:ring-lime-800"
+                className="mt-2 w-full py-1 bg-transparent border border-gray-400 rounded-md text-black focus:outline-none focus:ring-1 focus:ring-lime-800"
               >
                 <option value="" disabled>
                   Select an Occasion
@@ -159,7 +170,7 @@ const AddCollection = () => {
             <div className="mb-4">
               <label
                 htmlFor="category"
-                className="block text-base font-medium text-gray-700"
+                className="block text-base font-medium text-gray-800"
               >
                 Choose Tags
               </label>
@@ -168,8 +179,11 @@ const AddCollection = () => {
                 id="tag"
                 value={tag}
                 onChange={handleTagChange}
-                className="mt-2 px-6 py-1 w-full border bg-transparent border-gray-300 rounded-md text-gray-800 focus:outline-none focus:ring-1 focus:ring-lime-800"
+                className="mt-2 px-6 py-1 w-full border bg-transparent border-gray-400 rounded-md text-black focus:outline-none focus:ring-1 focus:ring-lime-800"
               >
+                <option value="" disabled>
+                  -- Select a Tag --
+                </option>
                 <option value="Shirt">Shirt</option>
                 <option value="T-Shirt">T-Shirt</option>
                 <option value="Pant">Pant</option>
@@ -185,28 +199,24 @@ const AddCollection = () => {
 
           <div className="flex flex-col items-center">
             {selectedTop || selectedBottom ? (
-              <div className="mt-6 w-72 p-6  border border-gray-400 rounded-lg shadow-lg">
+              <div className="mt-6 w-72 h-80 p-4 border border-gray-400 rounded-lg shadow-lg relative flex justify-center items-center">
                 <div className="flex flex-col items-center">
                   {/* Top-Wear Preview */}
                   {selectedTop && (
-                    <div>
-                      <img
-                        src={selectedTop.imageUrl}
-                        alt={selectedTop.tag}
-                        className="w-40 h-40 object-contain rounded-lg "
-                      />
-                    </div>
+                    <img
+                      src={selectedTop.imageUrl}
+                      alt={selectedTop.tag}
+                      className="w-32 h-32 object-contain absolute top-16 z-0"
+                    />
                   )}
 
                   {/* Bottom-Wear Preview */}
                   {selectedBottom && (
-                    <div className=" -my-7">
-                      <img
-                        src={selectedBottom.imageUrl}
-                        alt={selectedBottom.tag}
-                        className="w-40 h-40  rounded-lg"
-                      />
-                    </div>
+                    <img
+                      src={selectedBottom.imageUrl}
+                      alt={selectedBottom.tag}
+                      className="w-32 h-32 object-contain absolute bottom-12 z-10 transform translate-x-4 "
+                    />
                   )}
                 </div>
               </div>
@@ -235,11 +245,17 @@ const AddCollection = () => {
                   className="border-2 border-gray-300 shadow-lg cursor-pointer p-3  hover:scale-105 transition-all duration-300 ease-in-out"
                   onClick={() => handleImageClick(item)}
                 >
-                  <img
-                    src={item.imageUrl}
-                    alt={item.tag}
-                    className="w-24 h-24 sm:w-24 sm:h-24 lg:w-40 lg:h-40 mb-2 object-cover aspect-square rounded-lg mx-auto"
-                  />
+                  {item.imageUrl ? (
+                    <img
+                      src={item.imageUrl}
+                      alt={item.tag}
+                      className="w-24 h-24 sm:w-24 sm:h-24 lg:w-40 lg:h-40 mb-2 object-cover aspect-square rounded-lg mx-auto"
+                    />
+                  ) : (
+                    <div className="w-24 h-24 sm:w-24 sm:h-24 lg:w-40 lg:h-40 mb-2 bg-gray-100 rounded-lg mx-auto flex items-center justify-center text-gray-400 text-xs">
+                      No Image
+                    </div>
+                  )}
                   <h1 className="mx-2 text-lg font-semibold text-lime-800">
                     {item.brand}
                   </h1>

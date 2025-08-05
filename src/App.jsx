@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import bg from "./assets/bg1.jpg";
 import { Routes, Route } from "react-router-dom";
 //Cloudinary Image imports
@@ -14,6 +14,11 @@ import { useClerk, useUser } from "@clerk/clerk-react";
 import list from "./assets/list.png";
 import { useNavigate } from "react-router-dom";
 import NotFound from "./components/NotFound";
+import IntroAnimation from "./components/Animation";
+import { Toaster } from "react-hot-toast";
+import h1 from "./assets/h1.png";
+import h2 from "./assets/h2.png";
+import h3 from "./assets/h3.png";
 
 const cld = new Cloudinary({ cloud: { cloudName: "dpbrphx2g" } });
 // env
@@ -24,6 +29,11 @@ function App() {
   const [showLogout, setShowLogout] = useState(false);
   const [activeTab, setActiveTab] = useState("viewClothes");
   const navigate = useNavigate();
+  useEffect(() => {
+    const handleReset = (e) => setActiveTab(e.detail);
+    window.addEventListener("resetTab", handleReset);
+    return () => window.removeEventListener("resetTab", handleReset);
+  }, []);
 
   const { signOut } = useClerk();
   if (!isLoaded) return <div>Loading Clerk...</div>;
@@ -41,6 +51,7 @@ function App() {
       style={{ backgroundImage: `url(${bg})` }}
     >
       {/* Logo  */}
+      <Toaster position="top-right" reverseOrder={false} />
       <div className="max-w-screen-xl w-full mx-auto sm:px-6 flex flex-col flex-grow">
         <div className="flex flex-col sm:flex-row  justify-between items-center py-4 gap-4">
           <div className="w-full sm:w-auto mt-4 text-center sm:text-left lg:mb-2 ">
@@ -89,49 +100,56 @@ function App() {
                 <SignedIn>
                   <div className="flex-grow p-4">
                     {/* Tabs */}
-                    <div className="flex justify-center space-x-3 ">
+                    <div className="flex justify-center gap-1  space-x-3 ">
                       <button
-                        className={`px-3 py-2 text-xs ${
+                        title="Clothes"
+                        className={`px-3 py-2 ${
                           activeTab === "viewClothes"
-                            ? "bg-lime-800 border-b rounded-md  text-white font-medium"
-                            : "bg-gray-200 text-gray-600 rounded-lg  border-gray-300"
+                            ? " bg-lime-700 rounded-md  text-white scale-105 shadow-md"
+                            : "hover:bg-lime-600 border border-gray-500 rounded-md "
                         }`}
                         onClick={() => setActiveTab("viewClothes")}
                       >
-                        MyClothes
+                        <img src={h1} alt="Collection" className="w-6 h-6" />
+                        {activeTab === "viewClothes" && (
+                          <div className="absolute -top-20 left-1/2 -translate-x-1/2 scale-[0.5]">
+                            <IntroAnimation />
+                          </div>
+                        )}
                       </button>
                       {/* Added it to the clothes section instead of making the mainscreen complex and bigger */}
-                      {/* <button  
-                      className={`px-3 py-2 text-xs   ${
-                        activeTab == "addClothes"
-                          ? "bg-lime-800 border-b rounded-md  text-white font-medium"
-                          : "bg-gray-200 text-gray-600 rounded-lg border-gray-300"
-                      }`}
-                      onClick={() => setActiveTab("addClothes")}
-                    >
-                      <span className="mr-1 text-sm">+</span>
-                      <span>Clothes</span>
-                    </button> */}
+
                       <button
-                        className={`px-3 py-2 text-xs  ${
+                        title="View Collection"
+                        className={`px-3 py-2  ${
                           activeTab == "viewCollection"
-                            ? "bg-lime-800 border-b rounded-md  text-white font-medium"
-                            : "bg-gray-200 text-gray-600 rounded-lg border-gray-300"
+                            ? "bg-lime-700 rounded-md  text-white scale-105 shadow-md"
+                            : "hover:bg-lime-600 border border-gray-500 rounded-md "
                         }`}
                         onClick={() => setActiveTab("viewCollection")}
                       >
-                        Collection
+                        <img src={h2} alt="Collection" className="w-6 h-6" />
+                        {activeTab === "viewCollection" && (
+                          <div className="absolute -top-20 left-1/2 -translate-x-1/2 scale-[0.5]">
+                            <IntroAnimation />
+                          </div>
+                        )}
                       </button>
                       <button
-                        className={`px-3 text-xs py-2   ${
+                        title="Add Collection"
+                        className={`px-3 py-2   ${
                           activeTab == "AddCollection"
-                            ? "bg-lime-800 border-b rounded-md  text-white font-medium"
-                            : "bg-gray-200 text-gray-600 rounded-lg border-gray-300"
+                            ? "bg-lime-700  rounded-md  text-white scale-105 shadow-md"
+                            : "hover:bg-lime-600 border border-gray-500 rounded-md "
                         }`}
                         onClick={() => setActiveTab("AddCollection")}
                       >
-                        <span className="mr-1 text-sm">+</span>
-                        <span>Collection</span>
+                        <img src={h3} alt="Collection" className="w-6 h-6" />
+                        {activeTab === "AddCollection" && (
+                          <div className="absolute -top-20 left-1/2 -translate-x-1/2 scale-[0.5]">
+                            <IntroAnimation />
+                          </div>
+                        )}
                       </button>
                     </div>
                     {/*Clothes Section*/}
