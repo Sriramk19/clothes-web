@@ -80,6 +80,12 @@ The frontend is built with **React**, styled using **Tailwind CSS**, and uses **
 
 ---
 
+## Frontend
+
+Front end is deployed in Vercel
+
 ## Backend Wait time:
 
-    The backend of the code is deployed in Render which keeps it website idle when not in use when the directed into the website the fist usage of the website takes around 15 seconds to run as it will be making the website from idle state to makeing the website to active mode
+The backend is deployed on Render, a cloud hosting platform.
+
+Render uses an idle-to-active scaling mechanism to optimize costs. When the backend remains inactive for a certain period, it enters an idle state. Upon the first request after idling, Render performs a cold start to bring the service online, which typically takes ~15 seconds. Subsequent requests are served without delay until the service idles again.
